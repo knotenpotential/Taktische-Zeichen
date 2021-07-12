@@ -10,8 +10,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
+    
+    steps:    
       - uses: actions/checkout@v2
-
-      - name: Make
-        run: make ci
+      
+      - name: Install dependencies
+        run: | 
+          sudo apt update
+          sudo apt install -y phantomjs optipng
+          
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade pip j2cli
+          
+      - run: make ci
